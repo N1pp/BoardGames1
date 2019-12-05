@@ -31,23 +31,25 @@ class ProductController extends Controller
         $product->description = $request->description;
         $product->price = $request->price;
         $product->save();
-        $tags = explode(',', $request->tags);
-        foreach ($tags as $str) {
-            if (Tag::where('value', trim($str))->get()->first()) {
-                $pt = new ProductTag;
-                $pt->product_id = $product->id;
-                $pt->tag_id = Tag::where('value', trim($str))->get()->first()->id;
-                $pt->save();
-            } else {
-                $tag = new Tag;
-                $tag->value = trim($str);
-                $tag->save();
-                $pt = new ProductTag;
-                $pt->product_id = $product->id;
-                $pt->tag_id = Tag::where('value', trim($str))->get()->first()->id;
-                $pt->save();
+        if($request->tags) {
+            $tags = explode(',', $request->tags);
+            foreach ($tags as $str) {
+                if (Tag::where('value', trim($str))->get()->first()) {
+                    $pt = new ProductTag;
+                    $pt->product_id = $product->id;
+                    $pt->tag_id = Tag::where('value', trim($str))->get()->first()->id;
+                    $pt->save();
+                } else {
+                    $tag = new Tag;
+                    $tag->value = trim($str);
+                    $tag->save();
+                    $pt = new ProductTag;
+                    $pt->product_id = $product->id;
+                    $pt->tag_id = Tag::where('value', trim($str))->get()->first()->id;
+                    $pt->save();
+                }
             }
         }
-        return view('home');
+        return redirect()->route('product',[$product->id]);
     }
 }

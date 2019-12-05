@@ -14,11 +14,11 @@ class CreateRatesTable extends Migration
     public function up()
     {
         Schema::create('rates', function (Blueprint $table) {
+            $table->Increments('id');
             $table->integer('user_id')->unsigned();
             $table->integer('product_id')->unsigned();
             $table->integer('value');
             $table->timestamps();
-            $table->primary(['user_id','product_id']);
             $table->foreign('user_id')
                 ->references('id')->on('users')
                 ->onDelete('cascade');
