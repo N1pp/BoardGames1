@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Comment;
 use App\Favourites;
+use App\Notifications\PaymentNotification;
 use App\Product;
 use App\Rate;
 use App\Sale;
+use App\User;
+use DemeterChain\A;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -72,6 +75,7 @@ class ProductManagerController extends Controller
         $sale->product_id = $product->id;
         $sale->price = $product->price;
         $sale->save();
+        User::find(Auth::id())->notify(new PaymentNotification($product));
         return redirect()->back();
     }
 }
