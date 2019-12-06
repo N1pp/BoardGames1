@@ -6,6 +6,7 @@ use App\Comment;
 use App\Favourites;
 use App\Product;
 use App\Rate;
+use App\Sale;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -62,6 +63,15 @@ class ProductManagerController extends Controller
 
     public function buy(Request $request)
     {
-
+        $product = Product::find($request->product_id);
+        $count = $product->amount;
+        $product->amount = $count - 1;
+        $product->save();
+        $sale = new Sale();
+        $sale->user_id = Auth::id();
+        $sale->product_id = $product->id;
+        $sale->price = $product->price;
+        $sale->save();
+        return redirect()->back();
     }
 }

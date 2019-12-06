@@ -6,7 +6,8 @@
                 <div class="col-lg-10">
                     <h1>Title: {{$product->name}}</h1>
                 </div>
-                <div class="col-2">
+                <div class="col-auto">
+                    Amount: {{$product->amount}}
                     Price: {{$product->price}}
                 </div>
             </div>
@@ -15,14 +16,19 @@
                     Rating: {{$product->rate}}
                 </div>
                 <div class="col-1">
-                    <button>Купить</button>
+                    <form action="{{route('buyProduct')}}" method="post">
+                        @csrf
+                        <input type="hidden" name="product_id" value="{{$product->id}}">
+                        <button type="submit">Купить</button>
+                    </form>
                 </div>
                 @if(!\App\Favourites::where('user_id',\Illuminate\Support\Facades\Auth::id())->where('product_id',$product->id)->get()->first())
                     <div class="col-2">
                         <form action="{{route('manageFavourites')}}" method="post">
                             @csrf
                             <input type="hidden" name="product_id" value="{{$product->id}}">
-                            <button class="btn-success" name="value" value="1" type="submit">Добавить в избранное</button>
+                            <button class="btn-success" name="value" value="1" type="submit">Добавить в избранное
+                            </button>
                         </form>
                     </div>
                 @else
@@ -30,7 +36,8 @@
                         <form action="{{route('manageFavourites')}}" method="post">
                             @csrf
                             <input type="hidden" name="product_id" value="{{$product->id}}">
-                            <button class="btn-danger" name="value" value="-1" type="submit">Убрать из избранного</button>
+                            <button class="btn-danger" name="value" value="-1" type="submit">Убрать из избранного
+                            </button>
                         </form>
                     </div>
                 @endif

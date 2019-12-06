@@ -17,7 +17,8 @@ class CreateSalesTable extends Migration
             $table->Increments('id');
             $table->integer('user_id')->index()->unsigned();
             $table->integer('product_id')->index()->unsigned();
-            $table->decimal('total_price');
+            $table->decimal('price');
+            $table->integer('amount')->default(1);
             $table->index(['user_id','product_id']);
             $table->foreign('user_id')
                 ->references('id')->on('users')
