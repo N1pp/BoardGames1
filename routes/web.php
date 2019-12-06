@@ -17,6 +17,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/createProduct', 'ProductController@createShow');
     Route::post('/leaveComment', 'ProductManagerController@createComment')->name('makeComment');
     Route::post('/rate', 'ProductManagerController@createRate')->name('makeRate');
+    Route::post('/manageFavourites','ProductManagerController@manageFavourites')->name('manageFavourites');
 });
 
 Auth::routes();

@@ -21,7 +21,7 @@ class Product extends Model
         $this->hasManyThrough(Tag::class,ProductTag::class,'product_id','id','id','id');
     }
 
-    public function comments(): HasMany
+    public function comments(): ?HasMany
     {
         $this->hasMany(Comment::class);
     }

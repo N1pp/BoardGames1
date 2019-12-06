@@ -1,5 +1,6 @@
 <?php
 
+use App\Rate;
 use Illuminate\Foundation\Inspiring;
 
 /*
@@ -16,10 +17,8 @@ use Illuminate\Foundation\Inspiring;
 Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->describe('Display an inspiring quote');
+
+
 Artisan::command('test', function () {
-    $product = new App\Product();
-    $product->price = 10;
-    $product->description = 'ewsrdtfyguhij';
-    $product->name = 'second';
-    $product->save();
+    print_r(Rate::all()->sum('value'));
 });

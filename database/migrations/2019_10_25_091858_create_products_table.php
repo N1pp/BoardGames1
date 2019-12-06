@@ -18,6 +18,7 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->string('description');
             $table->decimal('price',4,0);
+            $table->integer('amount')->default(0);
             $table->integer('rate')->default(0);
             $table->integer('comment')->default(0);
             $table->timestamps();

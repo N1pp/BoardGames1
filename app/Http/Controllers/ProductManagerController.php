@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Comment;
+use App\Favourites;
 use App\Product;
 use App\Rate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 
 class ProductManagerController extends Controller
 {
@@ -25,26 +25,43 @@ class ProductManagerController extends Controller
 
     public function createRate(Request $request)
     {
-//        dd($request);
-        if (Rate::where('user_id', Auth::id())->where('product_id', $request->product_id)->get()) {
-            Log::info('Я');
-            if (!Rate::where('user_id', Auth::id())->where('product_id', $request->product_id)->where('value', $request->value)->get()) {
-                Log::info("Я ТУТ БЫЛ НО ИЗМЕЛСЯ");
-                $rate = Rate::where('user_id', Auth::id())->where('product_id', $request->product_id)->get();
-                $rate->value = $request->value;
-                $rate->save();
-            }
-//        } else {
-//            Log::info("Я РОДИЛСЯ");
-//            $rate = new Rate();
-//            $rate->user_id = Auth::id();
-//            $rate->product_id = $request->product_id;
-//            $rate->value = $request->value;
-//            $rate->save();
-//            $product = Product::find($rate->product_id);
-//            $product->update(['rate', Rate::where('product_id',$product->id)->sum()]);
+        if (!Rate::where('product_id', $request->product_id)->where('user_id', Auth::id())->get()->first()) {
+            $rate = new Rate();
+            $rate->user_id = Auth::id();
+            $rate->value = $request->value;
+            $rate->product_id = $request->product_id;
+            $rate->save();
+        } elseif (!Rate::where('product_id', $request->product_id)
+            ->where('user_id', Auth::id())
+            ->where('value', $request->value)
+            ->get()->first()) {
+            $rate = Rate::where('product_id', $request->product_id)
+                ->where('user_id', Auth::id())
+                ->get()->first();
+            $rate->value = $request->value;
+            $rate->save();
+        }
+        $product = Product::find($request->product_id);
+        $product->rate = Rate::where('product_id', $request->product_id)->sum('value');
+        $product->save();
+        return redirect()->back();
+    }
+
+    public function manageFavourites(Request $request)
+    {
+        if ($request->value == -1) {
+            Favourites::where('product_id', $request->product_id)->where('user_id', Auth::id())->first()->delete();
+        } else {
+            $fav = new Favourites();
+            $fav->user_id = Auth::id();
+            $fav->product_id = $request->product_id;
+            $fav->save();
         }
         return redirect()->back();
+    }
+
+    public function buy(Request $request)
+    {
 
     }
 }
