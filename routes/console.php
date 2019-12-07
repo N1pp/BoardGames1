@@ -1,4 +1,5 @@
-<?php
+*/986532.0
+.3+69*-<?php
 
 use App\Rate;
 use Illuminate\Foundation\Inspiring;

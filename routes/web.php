@@ -13,6 +13,9 @@ Route::get('/product/{id}', 'ProductController@show')->name('product');
 Route::get('/', 'ProductController@get');
 Route::post('/create', 'ProductController@create')->name('createProduct');
 Auth::routes();
+
+Route::post('');
+
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/createProduct', 'ProductController@createShow');
     Route::post('/leaveComment', 'ProductManagerController@createComment')->name('makeComment');

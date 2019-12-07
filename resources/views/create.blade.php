@@ -12,6 +12,7 @@
     <div class="content">
         <div class="container">
             <form method="POST" action="{{route('createProduct')}}" enctype="multipart/form-data">
+{{--                TODO Добавить краткое описание              --}}
                 <div class="form-group">
                     @csrf
                     Введите название:

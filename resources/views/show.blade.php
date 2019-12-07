@@ -64,7 +64,7 @@
             </div>
             <div class="row">
                 Tags: @foreach($product->tags()->get() as $tag)
-                          {{$tag->value}}
+                    {{$tag->value}}
                 @endforeach
             </div>
             <div class="row">
