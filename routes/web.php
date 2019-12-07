@@ -20,7 +20,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/manageFavourites','ProductManagerController@manageFavourites')->name('manageFavourites');
     Route::post('/buyProduct','ProductManagerController@buy')->name('buyProduct');
 });
-
+//TODO Изучить роуты авторизации
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

@@ -66,6 +66,7 @@ class ProductManagerController extends Controller
 
     public function buy(Request $request)
     {
+        // TODO Добавить возможность покупать много товаров
         $product = Product::find($request->product_id);
         $count = $product->amount;
         $product->amount = $count - 1;

@@ -16,13 +16,13 @@ class Product extends Model
         'comment'
     ];
 
-    public function tags(): ?HasMany
+    public function tags(): ?BelongsToMany
     {
-        $this->hasManyThrough(Tag::class,ProductTag::class,'product_id','id','id','id');
+        return $this->belongsToMany(Tag::class);
     }
 
     public function comments(): ?HasMany
     {
-        $this->hasMany(Comment::class);
+        return $this->hasMany(Comment::class);
     }
 }

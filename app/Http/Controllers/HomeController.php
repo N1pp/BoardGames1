@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Product;
+use App\Sale;
+use App\User;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -13,7 +16,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        //
     }
 
     /**
@@ -23,6 +26,17 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $favourites = User::find(Auth::id())->favourites->map(function ($item) {
+            return $item->product_id;
+        });
+        $products = [];
+        foreach ($favourites as $id) {
+            $products[] = Product::find($id);
+        }
+        $sales = Sale::where('user_id',Auth::id())->get();
+        return view('home', [
+            'favourites' => $products,
+            'sales'      => $sales
+        ]);
     }
 }

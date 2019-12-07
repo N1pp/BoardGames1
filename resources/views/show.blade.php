@@ -63,6 +63,11 @@
                 </div>
             </div>
             <div class="row">
+                Tags: @foreach($product->tags()->get() as $tag)
+                          {{$tag->value}}
+                @endforeach
+            </div>
+            <div class="row">
                 <div class="col-3">
                     Date:{{$product->created_at}}
                 </div>
