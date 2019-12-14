@@ -1,6 +1,5 @@
 <?php
-/*
-|--------------------------------------------------------------------------
+/*|--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
 |
@@ -9,21 +8,25 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+use Illuminate\Support\Facades\Auth;
+
 Route::get('/product/{id}', 'ProductController@show')->name('product');
 Route::get('/', 'ProductController@get');
-Route::post('/create', 'ProductController@create')->name('createProduct');
 Auth::routes();
 
-Route::post('');
-
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/createProduct', 'ProductController@createShow');
+    Route::get('/createProduct', 'ProductController@createShow')->name('createProductForm')->middleware('admin');///////
+    Route::post('/createProduct', 'ProductController@create')->name('createProduct')->middleware('admin');//////////////
     Route::post('/leaveComment', 'ProductManagerController@createComment')->name('makeComment');
     Route::post('/rate', 'ProductManagerController@createRate')->name('makeRate');
     Route::post('/manageFavourites','ProductManagerController@manageFavourites')->name('manageFavourites');
     Route::post('/buyProduct','ProductManagerController@buy')->name('buyProduct');
 });
-//TODO Изучить роуты авторизации
-Auth::routes();
+
+Auth::routes([
+    'verify' => true,
+    'reset'  =>  true
+]);
 
 Route::get('/home', 'HomeController@index')->name('home');

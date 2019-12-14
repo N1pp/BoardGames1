@@ -7,20 +7,27 @@
                 <div class="card">
                     <div class="card-header">Dashboard</div>
                     <div class="card-body">
-                        @isset($favourites)
-                            Your favourites:
-                            <ul>
-                                @foreach($favourites as $product)
-                                    <li><a href="{{route('product',[$product])}}">{{$product->name}}</a></li>
-                                @endforeach
-                            </ul>
+                        <div>
+                            @if(\Illuminate\Support\Facades\Auth::user()->email_verified_at == null)
+                                Для покупки товаров подтвердите вашу почту
+                            @endif
+                        </div>
+                        <div>
+                            @isset($favourites)
+                                Your favourites:
+                        </div>
+                        <ul>
+                            @foreach($favourites as $product)
+                                <li><a href="{{route('product',[$product])}}">{{$product->name}}</a></li>
+                            @endforeach
+                        </ul>
                         @endisset
                         @isset($sales)
                             Your sales:
                             <ul>
                                 @foreach($sales as $sale)
                                     <li><a href="">{{$sale->id}}</a>
-{{--                                        {{$sale->products()->first()->name}}--}}
+                                        {{--                                        {{$sale->products()->first()->name}}--}}
                                     </li>
                                 @endforeach
                             </ul>

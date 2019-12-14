@@ -34,6 +34,6 @@ class CreateProductTagTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('product_tags');
+        Schema::dropIfExists('product_tag');
     }
 }

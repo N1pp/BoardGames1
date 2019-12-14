@@ -7,6 +7,7 @@ use App\NewsTags;
 use App\Product;
 use App\ProductTag;
 use App\Tag;
+use http\Env\Request;
 
 class ProductController extends Controller
 {
@@ -21,9 +22,12 @@ class ProductController extends Controller
         $products = Product::all()->sortByDesc('created_at');
         return view('products', compact('products'));
     }
-    public function createShow(){
+
+    public function createShow()
+    {
         return view('create');
     }
+
     public function create(CreateProductRequest $request)
     {
         $product = new Product();
@@ -31,7 +35,7 @@ class ProductController extends Controller
         $product->description = $request->description;
         $product->price = $request->price;
         $product->save();
-        if($request->tags) {
+        if ($request->tags) {
             $tags = explode(',', $request->tags);
             foreach ($tags as $str) {
                 if (Tag::where('value', trim($str))->get()->first()) {
@@ -50,6 +54,23 @@ class ProductController extends Controller
                 }
             }
         }
-        return redirect()->route('product',[$product->id]);
+        return redirect()->route('product', [$product->id]);
     }
+
+    public function filter(Request $request)
+    {
+        $products = Product::all();
+        if ($request->price_top)
+            $products->where('price', '<', $request->price_top);
+        if ($request->price_low)
+            $products->where('price', '>', $request->price_low);
+        if ($request->tags) {
+            $products->filter(function ($item, $key) use ($request){
+                $item->tags->contains($key->tags);
+            });
+        }
+        if ($request->name)
+            $products->where('name', 'LIKE', "%{$request->name}%");
+    }
+
 }

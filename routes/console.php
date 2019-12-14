@@ -19,7 +19,18 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->describe('Display an inspiring quote');
 
+Artisan::command('admin', function () {
+    $admin = new \App\User();
+    $admin->name = 'admin';
+    $admin->email = 'admin@admin.com';
+    $admin->password = \Illuminate\Support\Facades\Hash::make('12qwasZX');
+    $admin->role = 'admin';
+    $admin->email_verified_at = now();
+    $admin->save();
+});
 
 Artisan::command('test', function () {
-    print_r(Rate::all()->sum('value'));
+    $tags[] = \App\Tag::find(2);
+    $tags[] = \App\Tag::find(3);
+    print(\App\Product::find(3)->tags->contains($tags));
 });

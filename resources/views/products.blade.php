@@ -12,7 +12,6 @@
                         <div style="display:flex; flex-direction: row-reverse">
                             <p class="card-title" style="margin:0 2rem">{{$product->price   }}</p>
                         </div>
-
                     </div>
                     <p class="card-text">{{$product->description}}</p>
                 </div>
@@ -23,7 +22,7 @@
                     <li class="list-group-item">Rating: {{$product->rate}}</li>
                 </ul>
                 <div class="card-body">
-                    <a href="/product/{{$product->id}}" class="card-link">Go to game page</a>
+                    <a href="{{ route('product',[$product]) }}" class="card-link">Go to game page</a>
                 </div>
             </div>
         @endforeach
