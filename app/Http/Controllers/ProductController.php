@@ -7,7 +7,8 @@ use App\NewsTags;
 use App\Product;
 use App\ProductTag;
 use App\Tag;
-use http\Env\Request;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -61,16 +62,18 @@ class ProductController extends Controller
     {
         $products = Product::all();
         if ($request->price_top)
-            $products->where('price', '<', $request->price_top);
+            $products = $products->where('price', '<', $request->price_top);
         if ($request->price_low)
-            $products->where('price', '>', $request->price_low);
-        if ($request->tags) {
-            $products->filter(function ($item, $key) use ($request){
-                $item->tags->contains($key->tags);
+            $products = $products->where('price', '>', $request->price_low);
+        if ($request->tag !== 0) {
+            $products = $products->filter(function ($item) use ($request) {
+                $item->tags->contains($request->tag);
             });
         }
         if ($request->name)
-            $products->where('name', 'LIKE', "%{$request->name}%");
+            $products = $products->where('name', 'LIKE', "%{$request->name}%");
+        dd($products);
+        return view('products', compact($products));
     }
 
 }

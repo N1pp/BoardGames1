@@ -1,5 +1,39 @@
 @extends('layouts.app')
 @section('content')
+    <div class="container">
+        <form method="GET" action="{{ route('filter') }}">
+            @csrf
+            <button type="submit" class="btn btn-primary">Search</button>
+            <div class="form-group">
+                @csrf
+                Введите название:
+                <textarea class="form-control" id="text" name="name"></textarea>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        Введите минимальную цену:
+                        <input class="form-control" type="number" name="price_low">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        Введите максимальную цену:
+                        <input class="form-control" type="number" name="price_top">
+                    </div>
+                </div>
+            </div>
+            Введите желаемые теги:
+            <div class="input-group mb-3">
+                <select class="custom-select" name="tag">
+                    <option value="0">Choose tag</option>
+                    @foreach(\App\Tag::all() as $tag)
+                        <option value="{{$tag->id}}">{{$tag->value}}</option>
+                    @endforeach
+                </select>
+            </div>
+        </form>
+    </div>
     <div style="display:flex; flex-direction: row; flex-wrap: wrap; justify-content: center ">
         @foreach($products as $product)
             <div class="card" style="width: 18rem; margin: 1rem">
