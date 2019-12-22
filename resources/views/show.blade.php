@@ -2,7 +2,7 @@
 @section('content')
     <div class="container border border-success" style="background: yellowgreen; border-radius: 10px">
         <div class="border-dark">
-            <div class="row justify-content-md-center" >
+            <div class="row justify-content-md-center">
                 <div class="col-lg-10">
                     <h1>Title: {{$product->name}}</h1>
                 </div>
@@ -85,11 +85,20 @@
                     <textarea class="form-control" name="value">
                     </textarea>
                     <input type="hidden" name="product_id" value="{{$product->id}}">
-                    <button class="btn btn-block"type="submit">Leave</button>
+                    <button class="btn btn-block" type="submit">Leave</button>
                 </form>
                 @foreach(\App\Comment::where('product_id',$product->id)->get() as $comment)
-                    <div>{{$comment->value}}</div>
-                @endforeach
+                    <div class="container border border-dark" style="border-radius: 10px">
+                        <div class="row">
+                            <div class="col-auto">Autor: {{\App\User::find($comment->user_id)->name}}</div>
+                        </div>
+                        <div class="col col-md-11 ml-auto">{{$comment->value}}</div>
+                        <div class="row">
+                            <div class="col-auto">{{$comment->created_at}}</div>
+                        </div>
+                    </div>
             </div>
+            @endforeach
         </div>
+    </div>
 @endsection

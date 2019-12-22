@@ -17,7 +17,7 @@ class CreateCommentsTable extends Migration
             $table->Increments('id')->unsigned();
             $table->integer('user_id')->index()->unsigned();
             $table->integer('product_id')->index()->unsigned();
-            $table->string('value');
+            $table->text('value');
             $table->timestamps();
             $table->foreign('product_id')
                 ->references('id')->on('products')
