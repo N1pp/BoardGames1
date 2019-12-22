@@ -19,6 +19,10 @@
                     <textarea class="form-control" id="text" name="name"></textarea>
                 </div>
                 <div class="form-group">
+                    Enter short description:
+                    <textarea class="form-control" id="text" name="descriptionSmall"></textarea>
+                </div>
+                <div class="form-group">
                     Enter description:
                     <textarea class="form-control" id="text" name="description"></textarea>
                 </div>

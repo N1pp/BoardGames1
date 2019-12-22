@@ -23,10 +23,10 @@
         color: white;
     }
 </style>
-<body>
+<body style="background: #1d68a7">
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm" style="background: yellowgreen">
-            <div class="container">
+            <div class="container" style="background: yellowgreen"  >
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
@@ -78,11 +78,9 @@
             </div>
         </nav>
 
-        <main class="py-4" style="background: #1d68a7">
+        <main class="py-4">
             @yield('content')
         </main>
     </div>
 </body>
-<footer>
-</footer>
 </html>

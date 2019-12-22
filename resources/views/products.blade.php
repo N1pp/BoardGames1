@@ -3,27 +3,26 @@
     <div class="container">
         <form method="GET" action="{{ route('filter') }}">
             @csrf
-            <button type="submit" class="btn btn-primary">Search</button>
             <div class="form-group">
                 @csrf
-                Введите название:
+                Enter name:
                 <textarea class="form-control" id="text" name="name"></textarea>
             </div>
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-group">
-                        Введите минимальную цену:
+                        Enter minimum price:
                         <input class="form-control" type="number" name="price_low">
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group">
-                        Введите максимальную цену:
+                        Enter maximum price:
                         <input class="form-control" type="number" name="price_top">
                     </div>
                 </div>
             </div>
-            Введите желаемые теги:
+            Choose tag:
             <div class="input-group mb-3">
                 <select class="custom-select" name="tag">
                     <option value="">Choose tag</option>
@@ -32,6 +31,7 @@
                     @endforeach
                 </select>
             </div>
+            <button type="submit" class="btn btn-block" style="background: yellow">Search</button>
         </form>
     </div>
     <div style="display:flex; flex-direction: row; flex-wrap: wrap; justify-content: center">
@@ -47,7 +47,7 @@
                             <p class="card-title" style="margin:0 2rem">{{$product->price}}</p>
                         </div>
                     </div>
-                    <p class="card-text">{{$product->description}}</p>
+                    <p class="card-text">{{$product->descriptionSmall}}</p>
                 </div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item" style="background: yellowgreen">

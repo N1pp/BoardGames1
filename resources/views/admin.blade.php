@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <button class="btn btn-info" onClick='location.href="{{ route('createProductForm') }}"'>Create new product</button>
-    <table class="table">
+    <table class="table table-bordered">
         <thead>
         <tr>
             <th>id</th>

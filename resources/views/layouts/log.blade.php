@@ -18,9 +18,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<style>
-</style>
-<body>
+<body style="background: #1d68a7">
 <div id="app">
     <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm" style="background: yellowgreen">
         <div class="container">

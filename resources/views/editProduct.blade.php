@@ -23,6 +23,10 @@
                     <textarea class="form-control" id="text" name="description">{{$product->description}}</textarea>
                 </div>
                 <div class="form-group">
+                    Edit short description:
+                    <textarea class="form-control" id="text" name="descriptionSmall">{{$product->descriptionSmall}}</textarea>
+                </div>
+                <div class="form-group">
                     Edit price:
                     <input class="form-control" type="number" name="price" min="1" value="{{$product->price}}">
                 </div>

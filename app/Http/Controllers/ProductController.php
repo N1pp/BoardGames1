@@ -41,6 +41,8 @@ class ProductController extends Controller
             $product->update(['name' => $request->name]);
         if ($product->description != $request->description)
             $product->update(['description' => $request->description]);
+        if ($product->description != $request->descriptionSmall)
+            $product->update(['descriptionSmall' => $request->descriptionSmall]);
         if ($product->price != $request->price)
             $product->update(['price' => $request->price]);
         if ($request->tags) {
@@ -75,6 +77,7 @@ class ProductController extends Controller
         $product = new Product();
         $product->name = $request->name;
         $product->description = $request->description;
+        $product->descriptionSmall = $request->descriptionSmall;
         $product->price = $request->price;
         $product->save();
         if ($request->tags) {
