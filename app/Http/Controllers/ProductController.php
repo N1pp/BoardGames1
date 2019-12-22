@@ -8,7 +8,6 @@ use App\Product;
 use App\ProductTag;
 use App\Tag;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -60,19 +59,23 @@ class ProductController extends Controller
 
     public function filter(Request $request)
     {
-        $products = Product::all();
+        $str = $request->name;
+        $products = Product::query()->where('name', 'LIKE', "%{$str}%")->get();
         if ($request->price_top)
             $products = $products->where('price', '<', $request->price_top);
         if ($request->price_low)
             $products = $products->where('price', '>', $request->price_low);
         if ($request->tag !== 0) {
             $products = $products->filter(function ($item) use ($request) {
-                $item->tags->contains($request->tag);
+                $tags = $item->tags;
+                foreach ($tags as $tag) {
+                    if ($tag->value == $request->tag) {
+                        return true;
+                    }
+                }
+                return false;
             });
         }
-        if ($request->name)
-            $products = $products->where('name', 'LIKE', "%{$request->name}%");
-        dd($products);
         return view('products', compact($products));
     }
 

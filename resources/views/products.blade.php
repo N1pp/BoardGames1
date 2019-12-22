@@ -28,7 +28,7 @@
                 <select class="custom-select" name="tag">
                     <option value="0">Choose tag</option>
                     @foreach(\App\Tag::all() as $tag)
-                        <option value="{{$tag->id}}">{{$tag->value}}</option>
+                        <option value="{{$tag->value}}">{{$tag->value}}</option>
                     @endforeach
                 </select>
             </div>
@@ -44,7 +44,7 @@
                             <h5 class="card-title">{{$product->name}}</h5>
                         </div>
                         <div style="display:flex; flex-direction: row-reverse">
-                            <p class="card-title" style="margin:0 2rem">{{$product->price   }}</p>
+                            <p class="card-title" style="margin:0 2rem">{{$product->price}}</p>
                         </div>
                     </div>
                     <p class="card-text">{{$product->description}}</p>

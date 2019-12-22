@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Comment;
 use App\Favourites;
+use App\Http\Requests\CommentRequest;
 use App\Notifications\PaymentNotification;
 use App\Product;
 use App\Rate;
@@ -15,7 +16,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ProductManagerController extends Controller
 {
-    public function createComment(Request $request)
+    public function createComment(CommentRequest $request)
     {
         $com = new Comment();
         $com->value = $request->value;

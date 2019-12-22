@@ -30,7 +30,7 @@ Artisan::command('admin', function () {
 });
 
 Artisan::command('test', function () {
-    $tags[] = \App\Tag::find(2);
-    $tags[] = \App\Tag::find(3);
-    print(\App\Product::find(3)->tags->contains($tags));
+    $products = \App\Product::all();
+    $products->where('name','LIKE','%test%');
+    print_r($products->dd());
 });
