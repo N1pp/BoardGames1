@@ -28,6 +28,48 @@ class ProductController extends Controller
         return view('create');
     }
 
+    public function editShow(Request $request)
+    {
+        $product = Product::find($request->id);
+        return view('editProduct', compact('product'));
+    }
+
+    public function edit(Request $request)
+    {
+        $product = Product::find($request->id);
+        if ($product->name != $request->name)
+            $product->update(['name' => $request->name]);
+        if ($product->description != $request->description)
+            $product->update(['description' => $request->description]);
+        if ($product->price != $request->price)
+            $product->update(['price' => $request->price]);
+        if ($request->tags) {
+            $tags = explode(',', $request->tags);
+            foreach ($tags as $str) {
+                if (Tag::where('value', trim($str))->get()->first()) {
+                    $tag = Tag::where('value', trim($str))->get()->first();
+                    if (!$product->tags->contains($tag)) {
+                        $pt = new ProductTag;
+                        $pt->product_id = $product->id;
+                        $pt->tag_id = $tag->id;
+                        $pt->save();
+                    }
+                } else {
+                    $tag = new Tag;
+                    $tag->value = trim($str);
+                    $tag->save();
+                    if (!$product->tags->contains($tag)) {
+                        $pt = new ProductTag;
+                        $pt->product_id = $product->id;
+                        $pt->tag_id = $tag->id;
+                        $pt->save();
+                    }
+                }
+            }
+        }
+        return redirect()->route('admin');
+    }
+
     public function create(CreateProductRequest $request)
     {
         $product = new Product();
@@ -57,6 +99,20 @@ class ProductController extends Controller
         return redirect()->route('product', [$product->id]);
     }
 
+    public function add(Request $request)
+    {
+        $product = Product::find($request->id);
+        $product->amount = $product->amount + $request->amount;
+        $product->save();
+        return redirect()->back();
+    }
+
+    public function delete(Request $request)
+    {
+        Product::find($request->id)->delete();
+        return redirect()->back();
+    }
+
     public function filter(Request $request)
     {
         $str = $request->name;
@@ -65,7 +121,7 @@ class ProductController extends Controller
             $products = $products->where('price', '<', $request->price_top);
         if ($request->price_low)
             $products = $products->where('price', '>', $request->price_low);
-        if ($request->tag !== 0) {
+        if ($request->tag) {
             $products = $products->filter(function ($item) use ($request) {
                 $tags = $item->tags;
                 foreach ($tags as $tag) {
@@ -76,7 +132,7 @@ class ProductController extends Controller
                 return false;
             });
         }
-        return view('products', compact($products));
+        return view('products', compact('products'));
     }
 
 }

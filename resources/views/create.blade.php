@@ -15,26 +15,26 @@
 {{--                TODO Добавить краткое описание              --}}
                 <div class="form-group">
                     @csrf
-                    Введите название:
+                    Enter name:
                     <textarea class="form-control" id="text" name="name"></textarea>
                 </div>
                 <div class="form-group">
-                    Введите описание:
+                    Enter description:
                     <textarea class="form-control" id="text" name="description"></textarea>
                 </div>
                 <div class="form-group">
-                    Введите цену:
-                    <input class="form-control" type="text" name="price">
+                    Enter price:
+                    <input class="form-control" type="number" min="1" name="price">
                 </div>
                 <div class="form-group">
-                    Введите желаемые теги:
+                    Enter tags:
                     <input class="form-control" type="text" name="tags">
                 </div>
                 <div class="form-group">
-                    Можете добавить картинку:
+                    You can add a picture:
                     <input type="file" name="img[]" multiple/>
                 </div>
-                <button type="submit" class="btn btn-primary">Добавить</button>
+                <button type="submit" class="btn btn-primary">Add</button>
             </form>
         </div>
     </div>

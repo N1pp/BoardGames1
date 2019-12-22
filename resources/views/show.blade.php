@@ -1,8 +1,8 @@
 @extends('layouts.app')
 @section('content')
-    <div class="container">
-        <div class="border-bottom border-dark">
-            <div class="row justify-content-md-center">
+    <div class="container border border-success" style="background: yellowgreen; border-radius: 10px">
+        <div class="border-dark">
+            <div class="row justify-content-md-center" >
                 <div class="col-lg-10">
                     <h1>Title: {{$product->name}}</h1>
                 </div>

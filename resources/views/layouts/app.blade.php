@@ -15,13 +15,17 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
+<style>
+    body {
+        color: white;
+    }
+</style>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm" style="background: yellowgreen">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
@@ -50,16 +54,22 @@
                             @endif
                         @else
                             <div class="btn-group">
-                                <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <button type="button" class="btn dropdown-toggle" style="background: #1d68a7" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     {{ Auth::user()->name }}
                                 </button>
                                 <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="{{ route('admin') }}">Admin</a>
+                                    <a class="dropdown-item" href="{{ route('home') }}">Cabinet</a>
                                     <a class="dropdown-item" href="{{ route('products') }}">Main page</a>
-                                    <a class="dropdown-item" href="{{ route('home') }}">Home</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                    <a class="dropdown-item" href="{{ route('logout') }}" style="color: #b91d19"
                                        onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">Logout</a>
+                                                     document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                    </a>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
                                 </div>
                             </div>
                         @endguest
@@ -68,9 +78,11 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main class="py-4" style="background: #1d68a7">
             @yield('content')
         </main>
     </div>
 </body>
+<footer>
+</footer>
 </html>

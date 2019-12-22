@@ -26,7 +26,7 @@
             Введите желаемые теги:
             <div class="input-group mb-3">
                 <select class="custom-select" name="tag">
-                    <option value="0">Choose tag</option>
+                    <option value="">Choose tag</option>
                     @foreach(\App\Tag::all() as $tag)
                         <option value="{{$tag->value}}">{{$tag->value}}</option>
                     @endforeach
@@ -34,11 +34,11 @@
             </div>
         </form>
     </div>
-    <div style="display:flex; flex-direction: row; flex-wrap: wrap; justify-content: center ">
+    <div style="display:flex; flex-direction: row; flex-wrap: wrap; justify-content: center">
         @foreach($products as $product)
-            <div class="card" style="width: 18rem; margin: 1rem">
+            <div class="card" style="width: 18rem; margin: 1rem; background: yellowgreen">
                 {{--        <img class="card-img-top" src=".../100px180/?text=Image cap" alt="Card image cap">--}}
-                <div class="card-body">
+                <div class="card-body" >
                     <div style="display: flex; flex-wrap: nowrap">
                         <div style="display:flex; flex-direction: row">
                             <h5 class="card-title">{{$product->name}}</h5>
@@ -50,10 +50,10 @@
                     <p class="card-text">{{$product->description}}</p>
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
+                    <li class="list-group-item" style="background: yellowgreen">
                         Tags:@foreach($product->tags()->get() as $tag){{$tag->value}} @endforeach</li>
-                    <li class="list-group-item">Amount of comments:{{$product->comment}}</li>
-                    <li class="list-group-item">Rating: {{$product->rate}}</li>
+                    <li class="list-group-item" style="background: yellowgreen">Amount of comments:{{$product->comment}}</li>
+                    <li class="list-group-item" style="background: yellowgreen">Rating: {{$product->rate}}</li>
                 </ul>
                 <div class="card-body">
                     <a href="{{ route('product',[$product]) }}" class="card-link">Go to game page</a>

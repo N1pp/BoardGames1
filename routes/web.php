@@ -16,8 +16,15 @@ Route::get('/', 'ProductController@get')->name('products');
 Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/createProduct', 'ProductController@createShow')->name('createProductForm')->middleware('admin');///////
-    Route::post('/createProduct', 'ProductController@create')->name('createProduct')->middleware('admin');//////////////
+    Route::group(['middleware' => 'admin'], function() {
+        Route::get('/admin','AdminController@index')->name('admin');
+        Route::get('/admin/createProduct', 'ProductController@createShow')->name('createProductForm');
+        Route::post('/admin/createProduct', 'ProductController@create')->name('createProduct');
+        Route::get('/admin/editProduct', 'ProductController@editShow')->name('editProductForm');
+        Route::post('/admin/editProduct', 'ProductController@edit')->name('editProduct');
+        Route::post('/admin/deleteProduct', 'ProductController@delete')->name('deleteProduct');
+        Route::post('/admin/addAmount', 'ProductController@add')->name('addAmount');
+    });
     Route::post('/leaveComment', 'ProductManagerController@createComment')->name('makeComment');
     Route::post('/rate', 'ProductManagerController@createRate')->name('makeRate');
     Route::post('/manageFavourites', 'ProductManagerController@manageFavourites')->name('manageFavourites');
