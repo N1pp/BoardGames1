@@ -33,7 +33,7 @@
                         <form action="{{route('manageFavourites')}}" method="post">
                             @csrf
                             <input type="hidden" name="product_id" value="{{$product->id}}">
-                            <button class="btn btn-success" name="value" value="1" type="submit">Добавить в избранное
+                            <button class="btn btn-success" name="value" value="1" type="submit">Add to favourites
                             </button>
                         </form>
                     </div>
@@ -42,7 +42,7 @@
                         <form action="{{route('manageFavourites')}}" method="post">
                             @csrf
                             <input type="hidden" name="product_id" value="{{$product->id}}">
-                            <button class="btn-danger" name="value" value="-1" type="submit">Убрать из избранного
+                            <button class="btn btn-danger" name="value" value="-1" type="submit">Remove favourites
                             </button>
                         </form>
                     </div>
