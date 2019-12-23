@@ -24,6 +24,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/admin/editProduct', 'ProductController@edit')->name('editProduct');
         Route::post('/admin/deleteProduct', 'ProductController@delete')->name('deleteProduct');
         Route::post('/admin/addAmount', 'ProductController@add')->name('addAmount');
+        Route::get('/admin/showComments','AdminController@showComments')->name('showComments');
+        Route::post('/admin/deleteComment','AdminController@deleteComment')->name('deleteComment');
+        Route::get('/admin/statistics/product','AdminController@showProductStatistics')->name('showProductStatistics');
     });
     Route::post('/leaveComment', 'ProductManagerController@createComment')->name('makeComment');
     Route::post('/rate', 'ProductManagerController@createRate')->name('makeRate');
