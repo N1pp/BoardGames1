@@ -4,6 +4,10 @@
         <div class="border-dark">
             <div class="row justify-content-md-center">
                 <div class="col-lg-10">
+                    <div class="col-auto">
+                        <img style="width: 100%; height: auto" class="card-img-top"
+                             src="{{asset('/storage/'.$product->img)}}" alt="Card image cap">
+                    </div>
                     <h1>Title: {{$product->name}}</h1>
                 </div>
                 <div class="col-auto">
@@ -21,10 +25,10 @@
                 </div>
                 <div class="col-1">
                     @if($product->amount > 0 )
-                        <form action="{{route('buyProduct')}}" method="post">
+                        <form action="{{route('add')}}" method="post">
                             @csrf
-                            <input type="hidden" name="product_id" value="{{$product->id}}">
-                            <button class="btn" type="submit">Купить</button>
+                            <input type="hidden" name="product" value="{{$product->id}}">
+                            <button class="btn" type="submit">Add to cart</button>
                         </form>
                     @endif
                 </div>
@@ -49,9 +53,6 @@
                 @endif
             </div>
             <div class="row">
-                <div class="col-1">
-                    Comments:{{$product->comment}}
-                </div>
                 <div class="col-11">
                     {{$product->description}}
                 </div>

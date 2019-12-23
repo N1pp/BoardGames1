@@ -74,11 +74,13 @@ class ProductController extends Controller
 
     public function create(CreateProductRequest $request)
     {
+        $path = $request->file('img')->store('uploads','public');
         $product = new Product();
         $product->name = $request->name;
         $product->description = $request->description;
         $product->descriptionSmall = $request->descriptionSmall;
         $product->price = $request->price;
+        $product->img = $path;
         $product->save();
         if ($request->tags) {
             $tags = explode(',', $request->tags);

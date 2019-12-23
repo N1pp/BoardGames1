@@ -43,10 +43,10 @@ class PaymentNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('Для перехода к оплате товара: ' . $this->product->name)
-                    ->line('перейдите по ссылке:')
-                    ->action('Перейти', url('/home'))
-                    ->line('Благодарим вас за использование наешго сайта!');
+                    ->line('Your offer №' . $this->product->id . 'was successful')
+                    ->line('You can return to site:')
+                    ->action('go', url('/home'))
+                    ->line('Thanks for using our cite!');
     }
 
     /**

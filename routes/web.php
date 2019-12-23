@@ -32,9 +32,11 @@ Route::group(['middleware' => 'auth'], function () {
 });
 Route::get('/filter', 'ProductController@filter')->name('filter');
 
+Route::post('/add','ProductManagerController@addToCart')->name('add');
+Route::post('/remove','ProductManagerController@removeFromCart')->name('remove');
+
 Auth::routes([
     'verify' => true,
-    'reset' => true
 ]);
 
 Route::get('/home', 'HomeController@index')->name('home');

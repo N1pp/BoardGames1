@@ -16,15 +16,9 @@ class CreateSalesTable extends Migration
         Schema::create('sales', function (Blueprint $table) {
             $table->Increments('id');
             $table->integer('user_id')->index()->unsigned();
-            $table->integer('product_id')->index()->unsigned();
-            $table->decimal('price');
-            $table->integer('amount')->default(1);
-            $table->index(['user_id','product_id']);
+            $table->decimal('price')->default(0);
             $table->foreign('user_id')
                 ->references('id')->on('users')
-                ->onDelete('cascade');
-            $table->foreign('product_id')
-                ->references('id')->on('products')
                 ->onDelete('cascade');
             $table->timestamps();
         });

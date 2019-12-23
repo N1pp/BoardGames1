@@ -36,7 +36,7 @@
                 </div>
                 <div class="form-group">
                     You can add a picture:
-                    <input type="file" name="img[]" multiple/>
+                    <input type="file" name="img"/>
                 </div>
                 <button type="submit" class="btn btn-primary">Add</button>
             </form>

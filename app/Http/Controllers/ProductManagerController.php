@@ -7,15 +7,46 @@ use App\Favourites;
 use App\Http\Requests\CommentRequest;
 use App\Notifications\PaymentNotification;
 use App\Product;
+use App\ProductSales;
 use App\Rate;
 use App\Sale;
 use App\User;
-use DemeterChain\A;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ProductManagerController extends Controller
 {
+
+    public function addToCart(Request $request)
+    {
+        $cart = [];
+        if (session()->get('cart'))
+            $cart = session()->get('cart');
+        $cart[] = $request->product;
+        session()->forget('cart');
+        session()->put('cart', $cart);
+        session()->save();
+        return redirect()->back();
+    }
+
+    public function removeFromCart(Request $request)
+    {
+        $cart = session()->get('cart');
+        $newCart = [];
+        $f = 0;
+        foreach ($cart as $product) {
+            if ($product == $request->id && $f == 0) {
+                $f = 1;
+            } else {
+                $newCart[] = $product;
+            }
+        }
+        session()->forget('cart');
+        session()->put('cart', $newCart);
+        session()->save();
+        return redirect()->back();
+    }
+
     public function createComment(CommentRequest $request)
     {
         $com = new Comment();
@@ -67,17 +98,40 @@ class ProductManagerController extends Controller
 
     public function buy(Request $request)
     {
-        // TODO Добавить возможность покупать много товаров
-        $product = Product::find($request->product_id);
-        $count = $product->amount;
-        $product->amount = $count - 1;
-        $product->save();
+        $toBuy = session()->get('cart');
+        $product = [];
+        foreach ($toBuy as $id)
+            $product[$id] = null;
+        foreach ($toBuy as $id)
+            $product[$id]++;
         $sale = new Sale();
         $sale->user_id = Auth::id();
-        $sale->product_id = $product->id;
-        $sale->price = $product->price;
         $sale->save();
-        User::find(Auth::id())->notify(new PaymentNotification($product));
-        return redirect()->back();
+        $keys = collect($product)->keys()->toArray();
+        $values = collect($product)->toArray();
+        foreach ($keys as $key){
+            $ps = new ProductSales();
+            $ps->product_id = $key;
+            $ps->sales_id = $sale->id;
+            $ps->save();
+        }
+        foreach ($values as $value){
+            $ps = ProductSales::all()->where('sales_id',$sale->id)->where('product_id',key($values))->first();
+            $ps->amount = $value;
+            $ps->save();
+        }
+        $price = 0;
+        foreach(ProductSales::all()->where('sales_id',$sale->id) as $ps){
+            $price+= $ps->amount * Product::find($ps->product_id)->price;
+            $pr = Product::find($ps->product_id);
+            $pr->amount = $pr->amount - $ps->amount;
+            $pr->save();
+        }
+        $sale->price = $price;
+        $sale->save();
+        session()->forget('cart');
+        session()->save();
+        User::find(Auth::id())->notify(new PaymentNotification($sale));
+        return redirect()->home();
     }
 }
