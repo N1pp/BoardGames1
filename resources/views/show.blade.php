@@ -2,44 +2,26 @@
 @section('content')
     <div class="container border border-success" style="background: yellowgreen; border-radius: 10px">
         <div class="border-dark">
-            <div class="row justify-content-md-center">
-                <div class="col-lg-10">
-                    <div class="col-auto">
-                        <img style="width: 100%; height: auto" class="card-img-top"
-                             src="{{asset('/storage/'.$product->img)}}" alt="Card image cap">
-                    </div>
-                    <h1>Title: {{$product->name}}</h1>
-                </div>
-                <div class="col-auto">
-                    @if($product->amount > 0 )
-                        Amount: {{$product->amount}}
-                        Price: {{$product->price}}
-                    @else
-                        Sold out!
-                    @endif
-                </div>
-            </div>
             <div class="row">
-                <div class="col-9">
-                    Rating: {{$product->rate}}
-                </div>
-                <div class="col-1">
-                    @if($product->amount > 0 )
-                        <form action="{{route('add')}}" method="post">
-                            @csrf
-                            <input type="hidden" name="product" value="{{$product->id}}">
-                            <button class="btn" type="submit">Add to cart</button>
-                        </form>
-                    @endif
-                </div>
+                <div class="col-10"><h1>Title: {{$product->name}}</h1></div>
+
                 @if(!\App\Favourites::where('user_id',\Illuminate\Support\Facades\Auth::id())->where('product_id',$product->id)->get()->first())
-                    <div class="col-2">
-                        <form action="{{route('manageFavourites')}}" method="post">
-                            @csrf
-                            <input type="hidden" name="product_id" value="{{$product->id}}">
-                            <button class="btn btn-success" name="value" value="1" type="submit">Add to favourites
-                            </button>
-                        </form>
+                    <div class="col-2 justify-content-end">
+                        <div class="row">
+                            <form action="{{route('manageFavourites')}}" method="post">
+                                @csrf
+                                <input type="hidden" name="product_id" value="{{$product->id}}">
+                                <button class="btn btn-success" name="value" value="1" type="submit">Add to favourites
+                                </button>
+                            </form>
+                            @if($product->amount > 0 )
+                                <form action="{{route('add')}}" method="post">
+                                    @csrf
+                                    <input type="hidden" name="product" value="{{$product->id}}">
+                                    <button class="btn" type="submit">Add to cart</button>
+                                </form>
+                            @endif
+                        </div>
                     </div>
                 @else
                     <div class="col-2">
@@ -51,6 +33,25 @@
                         </form>
                     </div>
                 @endif
+            </div>
+            <div class="row">
+                <div class="col-auto">
+                    @if($product->amount > 0 )
+                        Amount: {{$product->amount}}
+                        Price: {{$product->price}}
+                    @else
+                        Sold out!
+                    @endif
+                </div>
+            </div>
+            <div class="col-auto">
+                <img class="img" style="width: 100%; max-height: 30rem"
+                     src="{{asset('/storage/'.$product->img)}}" alt="Card image cap">
+            </div>
+            <div class="row">
+                <div class="col-9">
+                    Rating: {{$product->rate}}
+                </div>
             </div>
             <div class="row">
                 <div class="col-11">

@@ -109,20 +109,20 @@ class ProductManagerController extends Controller
         $sale->save();
         $keys = collect($product)->keys()->toArray();
         $values = collect($product)->toArray();
-        foreach ($keys as $key){
+        foreach ($keys as $key) {
             $ps = new ProductSales();
             $ps->product_id = $key;
             $ps->sales_id = $sale->id;
             $ps->save();
         }
-        foreach ($values as $value){
-            $ps = ProductSales::all()->where('sales_id',$sale->id)->where('product_id',key($values))->first();
+        foreach ($values as $value) {
+            $ps = ProductSales::all()->where('sales_id', $sale->id)->where('product_id', key($values))->first();
             $ps->amount = $value;
             $ps->save();
         }
         $price = 0;
-        foreach(ProductSales::all()->where('sales_id',$sale->id) as $ps){
-            $price+= $ps->amount * Product::find($ps->product_id)->price;
+        foreach (ProductSales::all()->where('sales_id', $sale->id) as $ps) {
+            $price += $ps->amount * Product::find($ps->product_id)->price;
             $pr = Product::find($ps->product_id);
             $pr->amount = $pr->amount - $ps->amount;
             $pr->save();

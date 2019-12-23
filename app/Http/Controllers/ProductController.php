@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Favourites;
 use App\Http\Requests\CreateProductRequest;
 use App\NewsTags;
+use App\Notifications\NewProductsNotification;
+use App\Notifications\PaymentNotification;
 use App\Product;
 use App\ProductTag;
 use App\Tag;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -109,6 +114,9 @@ class ProductController extends Controller
         $product = Product::find($request->id);
         $product->amount = $product->amount + $request->amount;
         $product->save();
+        foreach (Favourites::where('product_id',$request->id) as $fav){
+            User::find($fav->user_id)->notify(new NewProductsNotification($product));
+        }
         return redirect()->back();
     }
 

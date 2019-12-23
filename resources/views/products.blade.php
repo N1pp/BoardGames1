@@ -35,7 +35,7 @@
         </form>
     </div>
     <div style="display:flex; flex-direction: row; flex-wrap: wrap; justify-content: center">
-        @if($products->get(0))
+        @if(!$products->isEmpty())
             @foreach($products as $product)
                 <div class="card" style="width: 18rem; margin: 1rem; background: yellowgreen">
                     {{--        <img class="card-img-top" src=".../100px180/?text=Image cap" alt="Card image cap">--}}

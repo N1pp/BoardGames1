@@ -95,7 +95,7 @@
                                     @endforeach
                                         <form action="{{route('buyProduct')}}" method="post">
                                             @csrf
-                                            <button class="btn" type="submit">Buy</button>
+                                             <button class="btn" type="submit">Buy</button>
                                         </form>
                                 @else
                                     Nothing there

@@ -29,11 +29,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/rate', 'ProductManagerController@createRate')->name('makeRate');
     Route::post('/manageFavourites', 'ProductManagerController@manageFavourites')->name('manageFavourites');
     Route::post('/buyProduct', 'ProductManagerController@buy')->name('buyProduct');
+    Route::post('/add','ProductManagerController@addToCart')->name('add');
+    Route::post('/remove','ProductManagerController@removeFromCart')->name('remove');
 });
 Route::get('/filter', 'ProductController@filter')->name('filter');
 
-Route::post('/add','ProductManagerController@addToCart')->name('add');
-Route::post('/remove','ProductManagerController@removeFromCart')->name('remove');
 
 Auth::routes([
     'verify' => true,
