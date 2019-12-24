@@ -38,27 +38,28 @@
         @if(!$products->isEmpty())
             @foreach($products as $product)
                 <div class="card" style="width: 18rem; margin: 1rem; background: yellowgreen">
-                    {{--        <img class="card-img-top" src=".../100px180/?text=Image cap" alt="Card image cap">--}}
+                            <img class="card-img-top" src="{{asset('/storage/'.$product->img)}}" alt="Card image cap">
                     <div class="card-body">
-                        <div style="display: flex; flex-wrap: nowrap">
+                        <div class="row" style="display: flex; flex-wrap: nowrap">
                             <div style="display:flex; flex-direction: row">
-                                <h5 class="card-title">{{$product->name}}</h5>
+                                <h5 class="card-title">Name: {{$product->name}}</h5>
                             </div>
-                            <div style="display:flex; flex-direction: row-reverse">
-                                <p class="card-title" style="margin:0 2rem">{{$product->price}}</p>
+                            <div style="display:flex; text-align: right; flex-direction: row-reverse">
+                                <p class="card-title" style="margin:0 2rem">Price: {{$product->price}}</p>
                             </div>
                         </div>
+{{--                        <img class="img" style="width: 100%; max-height: 30rem"--}}
+{{--                             src="{{asset('/storage/'.$product->img)}}" alt="Card image cap">--}}
                         <p class="card-text">{{$product->descriptionSmall}}</p>
                     </div>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item" style="background: yellowgreen">
                             Tags:@foreach($product->tags()->get() as $tag){{$tag->value}} @endforeach</li>
-                        <li class="list-group-item" style="background: yellowgreen">Amount of
-                            comments:{{$product->comment}}</li>
+                        <li class="list-group-item" style="background: yellowgreen">Amount available:{{$product->amount}}</li>
                         <li class="list-group-item" style="background: yellowgreen">Rating: {{$product->rate}}</li>
                     </ul>
-                    <div class="card-body">
-                        <a href="{{ route('product',[$product]) }}" class="card-link">Go to game page</a>
+                    <div class="card-body align-content-between">
+                        <button class="btn btn-info" onClick='location.href="{{ route('product',[$product]) }}"'>Go to game page</button>
                     </div>
                 </div>
             @endforeach

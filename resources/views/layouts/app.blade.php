@@ -61,7 +61,9 @@
                                 {{ Auth::user()->name }}
                             </button>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="{{ route('admin') }}">Admin</a>
+                                @if(\Illuminate\Support\Facades\Auth::user()->role == 'admin')
+                                    <a class="dropdown-item" href="{{ route('admin') }}">Admin</a>
+                                @endif
                                 <a class="dropdown-item" href="{{ route('home') }}">Cabinet</a>
                                 <a class="dropdown-item" href="{{ route('products') }}">Main page</a>
                                 <div class="dropdown-divider"></div>
@@ -93,10 +95,10 @@
                                             </form>
                                         </div>
                                     @endforeach
-                                        <form action="{{route('buyProduct')}}" method="post">
-                                            @csrf
-                                             <button class="btn" type="submit">Buy</button>
-                                        </form>
+                                    <form action="{{route('buyProduct')}}" method="post">
+                                        @csrf
+                                        <button class="btn" type="submit">Buy</button>
+                                    </form>
                                 @else
                                     Nothing there
                                 @endif

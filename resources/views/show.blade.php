@@ -14,13 +14,6 @@
                                 <button class="btn btn-success" name="value" value="1" type="submit">Add to favourites
                                 </button>
                             </form>
-                            @if($product->amount > 0 )
-                                <form action="{{route('add')}}" method="post">
-                                    @csrf
-                                    <input type="hidden" name="product" value="{{$product->id}}">
-                                    <button class="btn" type="submit">Add to cart</button>
-                                </form>
-                            @endif
                         </div>
                     </div>
                 @else
@@ -33,12 +26,21 @@
                         </form>
                     </div>
                 @endif
+                <div>
+                    @if($product->amount > 0 )
+                        <form action="{{route('add')}}" method="post">
+                            @csrf
+                            <input type="hidden" name="product" value="{{$product->id}}">
+                            <button class="btn" type="submit">Add to cart</button>
+                        </form>
+                    @endif
+                </div>
             </div>
             <div class="row">
                 <div class="col-auto">
                     @if($product->amount > 0 )
                         Amount: {{$product->amount}}
-                        Price: {{$product->price}}
+                        Price: {{$product->price}}  
                     @else
                         Sold out!
                     @endif

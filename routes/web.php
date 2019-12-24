@@ -37,7 +37,6 @@ Route::group(['middleware' => 'auth'], function () {
 });
 Route::get('/filter', 'ProductController@filter')->name('filter');
 
-
 Auth::routes([
     'verify' => true,
 ]);

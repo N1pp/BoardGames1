@@ -9,7 +9,7 @@
                     <div class="card-body">
                         <div>
                             @if(\Illuminate\Support\Facades\Auth::user()->email_verified_at == null)
-                                Для покупки товаров подтвердите вашу почту
+                                To buy products verify your mail!
                             @endif
                         </div>
                         <div>
