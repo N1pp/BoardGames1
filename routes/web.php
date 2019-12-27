@@ -26,6 +26,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/admin/addAmount', 'ProductController@add')->name('addAmount');
         Route::get('/admin/showComments','AdminController@showComments')->name('showComments');
         Route::post('/admin/deleteComment','AdminController@deleteComment')->name('deleteComment');
+        Route::get('/admin/giveAdmin','AdminController@giveAdminForm')->name('giveAdminForm');
+        Route::get('/admin/users','AdminController@FilterUsers')->name('filterUsers');
+        Route::post('/admin/giveAdmin','AdminController@giveAdmin')->name('giveAdmin');
+        Route::post('/admin/removeAdmin','AdminController@removeAdmin')->name('removeAdmin');
         Route::get('/admin/statistics/product','AdminController@showProductStatistics')->name('showProductStatistics');
     });
     Route::post('/leaveComment', 'ProductManagerController@createComment')->name('makeComment');

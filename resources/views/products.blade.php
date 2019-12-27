@@ -6,7 +6,9 @@
             <div class="form-group">
                 @csrf
                 Enter name:
-                <textarea class="form-control" id="text" name="name"></textarea>
+                <div class="form-group">
+                    <input class="form-control" type="text" id="text" name="name">
+                </div>
             </div>
             <div class="row">
                 <div class="col-sm-6">
@@ -30,6 +32,10 @@
                         <option value="{{$tag->value}}">{{$tag->value}}</option>
                     @endforeach
                 </select>
+            </div>
+            <div class="form-group">
+                <input type="radio" name="sort" value="1"><label for="sort">Sort</label>
+                <input type="radio" name="sort" value="0"><label for="nosort">Do not sort</label>
             </div>
             <button type="submit" class="btn btn-block" style="background: yellow">Search</button>
         </form>

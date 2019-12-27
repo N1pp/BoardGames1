@@ -3,6 +3,7 @@
     <button class="btn btn-info" onClick='location.href="{{ route('createProductForm') }}"'>Create new product</button>
     <button class="btn btn-info" onClick='location.href="{{ route('showComments') }}"'>Show comments</button>
     <button class="btn btn-info" onClick='location.href="{{ route('showProductStatistics') }}"'>Show Statistics</button>
+    <button class="btn btn-info" onClick='location.href="{{ route('giveAdmin') }}"'>Add admin</button>
     <table class="table table-bordered">
         <thead>
         <tr>

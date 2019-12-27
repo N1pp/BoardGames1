@@ -6,13 +6,11 @@ use App\Favourites;
 use App\Http\Requests\CreateProductRequest;
 use App\NewsTags;
 use App\Notifications\NewProductsNotification;
-use App\Notifications\PaymentNotification;
 use App\Product;
 use App\ProductTag;
 use App\Tag;
 use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -79,7 +77,7 @@ class ProductController extends Controller
 
     public function create(CreateProductRequest $request)
     {
-        $path = $request->file('img')->store('uploads','public');
+        $path = $request->file('img')->store('uploads', 'public');
         $product = new Product();
         $product->name = $request->name;
         $product->description = $request->description;
@@ -114,7 +112,7 @@ class ProductController extends Controller
         $product = Product::find($request->id);
         $product->amount = $product->amount + $request->amount;
         $product->save();
-        foreach (Favourites::where('product_id',$request->id) as $fav){
+        foreach (Favourites::where('product_id', $request->id) as $fav) {
             User::find($fav->user_id)->notify(new NewProductsNotification($product));
         }
         return redirect()->back();
@@ -129,7 +127,7 @@ class ProductController extends Controller
     public function filter(Request $request)
     {
         $str = $request->name;
-        $products = Product::query()->where('name', 'LIKE', "%{$str}%")->get();
+        $products = Product::query()->where('name', 'LIKE', "%{$str}%")->get()->sortByDesc('rate');
         if ($request->price_top)
             $products = $products->where('price', '<', $request->price_top);
         if ($request->price_low)
@@ -147,5 +145,4 @@ class ProductController extends Controller
         }
         return view('products', compact('products'));
     }
-
 }

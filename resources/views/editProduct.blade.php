@@ -1,5 +1,10 @@
 @extends('layouts.app')
 @section('content')
+    <button class="btn btn-info" onClick='location.href="{{ route('createProductForm') }}"'>Create new product</button>
+    <button class="btn btn-info" onClick='location.href="{{ route('showComments') }}"'>Show comments</button>
+    <button class="btn btn-info" onClick='location.href="{{ route('showProductStatistics') }}"'>Show Statistics</button>
+    <button class="btn btn-info" onClick='location.href="{{ route('admin') }}"'>Show Products</button>
+    <button class="btn btn-info" onClick='location.href="{{ route('giveAdmin') }}"'>Add admin</button>
     @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
@@ -16,14 +21,16 @@
                 <div class="form-group">
                     @csrf
                     Edit name:
-                    <textarea class="form-control" id="text" name="name">{{$product->name}}</textarea>
+                    <div class="form-group">
+                        <input class="form-control" type="text" id="text" name="name" value="{{$product->name}}">
+                    </div>
                 </div>
                 <div class="form-group">
                     Edit description:
                     <textarea class="form-control" id="text" name="description">{{$product->description}}</textarea>
                 </div>
                 <div class="form-group">
-                    Edit short description:
+                    Edit      short description:
                     <textarea class="form-control" id="text" name="descriptionSmall">{{$product->descriptionSmall}}</textarea>
                 </div>
                 <div class="form-group">
