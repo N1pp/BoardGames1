@@ -13,12 +13,14 @@ use App\Sale;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class ProductManagerController extends Controller
 {
 
     public function addToCart(Request $request)
     {
+        Log::info('test');
         $cart = [];
         if (session()->get('cart'))
             $cart = session()->get('cart');
